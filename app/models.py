@@ -11,7 +11,7 @@ class EventRequest(BaseModel):
     endDate: Optional[str] = None
 
     class Config:
-        arbitrary_types_allowed = True
+        arbitrary_types_allowed = True  # ignore errors related to unknown types
 
 
 class Event(BaseModel):
