@@ -13,14 +13,16 @@ async def polling_events():
     
     try:
         # Validate request body
-        EventRequest(**request_data)  # Raises ValidationError if invalid
+        event_request = EventRequest(**request_data)  # Raises ValidationError if invalid
     except ValidationError as e:
+        logging.error(e.errors())
         return jsonify(error=f"Invalid request body: {e.errors()}"), 400
 
     try:
         # Process events and retrieve data
-        processed_events = await process_events(request_data)
-        return jsonify(processed_events)
+        processed_events = await process_events(event_request)
+        processed_events_dict = [event.dict() for event in processed_events]
+        return jsonify(processed_events_dict)
     except Exception as e:
         logging.error(f"Internal Server Error: {e}", exc_info=True)
         return jsonify(error=f"Internal Server Error: {str(e)}"), 500

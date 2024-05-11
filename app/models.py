@@ -1,17 +1,19 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
+from enum import Enum
 
-class LeagueEnum(str):
-    NFL = "NFL"
+class LeagueEnum(Enum):
+    NFL: str = "NFL"
 
 
 class EventRequest(BaseModel):
     league: LeagueEnum
     startDate: Optional[str] = None
     endDate: Optional[str] = None
-
-    class Config:
-        arbitrary_types_allowed = True  # ignore errors related to unknown types
+    
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    """class Config:
+        arbitrary_types_allowed = True  # """
 
 
 class Event(BaseModel):

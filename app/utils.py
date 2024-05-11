@@ -32,16 +32,16 @@ async def process_events(request_data: EventRequest) -> list[Event]:
         # Handle error fetching data
         logging.error(f"Error fetching data: {e}")
         return []
-        
+
     events = []
 
     rankings_dict = {ranking['teamId']: ranking for ranking in rankings_data}
-
+    
     for event in scoreboard_data:
-        
+
         event_date, event_time = event["timestamp"].split("T")
-        home_ranking = rankings_dict.get(event['homeTeamId'])
-        away_ranking = rankings_dict.get(event['awayTeamId'])
+        home_ranking = rankings_dict.get(event['home']['id'])
+        away_ranking = rankings_dict.get(event['away']['id'])
         # Extract relevant data from scoreboard
         event_obj = Event(
             eventId=event["id"],
