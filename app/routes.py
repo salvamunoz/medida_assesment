@@ -21,7 +21,6 @@ async def polling_events():
     try:
         # Process events and retrieve data
         processed_events = await process_events(event_request)
-        #TODO: change .dict() to model_dump() and test
         processed_events_dict = [event.model_dump() for event in processed_events]
         return jsonify(processed_events_dict)
     except Exception as e:
