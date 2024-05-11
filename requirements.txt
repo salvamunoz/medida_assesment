@@ -1,0 +1,4 @@
+flask[async]==3.0.3
+pytest==8.2.0
+requests==2.25.1
+pydantic==2.7.1
