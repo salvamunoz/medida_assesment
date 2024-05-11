@@ -22,7 +22,7 @@ async def polling_events():
         # Process events and retrieve data
         processed_events = await process_events(event_request)
         #TODO: change .dict() to model_dump() and test
-        processed_events_dict = [event.dict() for event in processed_events]
+        processed_events_dict = [event.model_dump() for event in processed_events]
         return jsonify(processed_events_dict)
     except Exception as e:
         logging.error(f"Internal Server Error: {e}", exc_info=True)
