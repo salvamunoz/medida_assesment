@@ -1,10 +1,8 @@
 from flask import Flask
+from .routes import bp as api_bp
 
 def create_app():
     app = Flask(__name__)
-
-    from . import routes
-    # Register routes
-    app.register_blueprint(routes.bp)
+    app.register_blueprint(api_bp)
 
     return app
