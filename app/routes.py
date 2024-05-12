@@ -1,8 +1,9 @@
+import logging
 from flask import request, jsonify, Blueprint
 from pydantic import ValidationError
 from .utils import process_events
 from .models import EventRequest
-import logging
+
 
 bp = Blueprint('api', __name__)
 
@@ -10,7 +11,7 @@ bp = Blueprint('api', __name__)
 @bp.route('/events', methods=['POST'])
 async def polling_events():
     request_data = request.json
-    
+ 
     try:
         # Validate request body
         event_request = EventRequest(**request_data)  # Raises ValidationError if invalid

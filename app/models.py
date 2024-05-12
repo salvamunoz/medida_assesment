@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 from typing import Optional
 from enum import Enum
 
@@ -10,10 +10,11 @@ class EventRequest(BaseModel):
     league: LeagueEnum
     startDate: Optional[str] = None
     endDate: Optional[str] = None
-    
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-    """class Config:
-        arbitrary_types_allowed = True  # """
+
+    # Model config
+    class Config:
+        # Forbid non existing keys
+        extra = "forbid"
 
 
 class Event(BaseModel):

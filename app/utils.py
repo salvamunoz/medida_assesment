@@ -1,5 +1,6 @@
 import logging
 from aiohttp import ClientSession, ClientResponseError
+from datetime import datetime
 from .models import Event, EventRequest,LeagueEnum
 from .config import DOCKER_CONTAINER_URL
 
@@ -55,13 +56,15 @@ async def process_events(request_data: EventRequest) -> list[Event]:
             awayTeamId=event["away"]["id"],
             awayTeamNickName=event["away"]["nickName"],
             awayTeamCity=event["away"]["city"],
-            awayTeamRank=away_ranking['rank'],  
+            awayTeamRank=away_ranking['rank'],
             awayTeamRankPoints=away_ranking['rankPoints'],
         )
 
-        if request_data.startDate and event_obj.eventDate < request_data.startDate:
+        if request_data.startDate and datetime.strptime(event_obj.eventDate, 
+                                                        "%Y-%m-%d") < datetime.strptime(request_data.startDate, "%Y-%m-%d"):
             continue
-        if request_data.endDate and event_obj.eventDate > request_data.endDate:
+        if request_data.endDate and datetime.strptime(event_obj.eventDate, 
+                                                      "%Y-%m-%d") > datetime.strptime(request_data.endDate, "%Y-%m-%d"):
             continue
 
         events.append(event_obj)

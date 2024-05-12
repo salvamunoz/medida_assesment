@@ -16,6 +16,16 @@ class TestModels(unittest.TestCase):
         with self.assertRaises(ValidationError):
             EventRequest()
 
+    def test_event_request_invalid_league(self):
+        # Test invalid EventRequest (invalid date)
+        with self.assertRaises(ValidationError):
+            EventRequest(league='NBA')
+    
+    def test_event_request_invalid_keys(self):
+        # Test invalid EventRequest (invalid date)
+        with self.assertRaises(ValidationError):
+            EventRequest(leaague='NFL')
+
     def test_event_valid(self):
         # Test valid Event
         data = {
